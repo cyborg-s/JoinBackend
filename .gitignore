@@ -1,0 +1,3 @@
+# Lokale Konfigurationsdateien
+env/
+*.sqlite3
