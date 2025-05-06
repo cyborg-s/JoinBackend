@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
-# Create your models here.
-
-
 class Contacts(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)

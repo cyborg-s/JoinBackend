@@ -4,6 +4,7 @@ from join_BE.models import Tasks, Contacts, Subtask, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+
 class ContactSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
@@ -33,7 +34,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
         fields = ['id', 'title', 'description', 'assigned_to',
-            'due_date', 'prio', 'category', 'PositionID', 'subtasks']
+                  'due_date', 'prio', 'category', 'PositionID', 'subtasks']
 
     def create(self, validated_data):
         subtasks_data = validated_data.pop('subtasks')
@@ -64,36 +65,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['username', 'email', 'first_name'] 
-
-# class UserRegistrationSerializer(serializers.ModelSerializer):
-#     reapeated_password = serializers.CharField(write_only=True)
-
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password', 'reapeated_password']
-#         extra_kwargs = {
-#             'password': {'write_only': True}
-#         }
-
-#     def validate_email(self, value):
-#         if User.objects.filter(email=value).exists():
-#             raise serializers.ValidationError("Diese E-Mail-Adresse ist bereits vergeben.")
-#         return value
-
-#     def validate(self, data):
-#         if data['password'] != data['reapeated_password']:
-#             raise serializers.ValidationError({"password": "Die Passwörter stimmen nicht überein."})
-#         return data
-
-#     def create(self, validated_data):
-#         validated_data.pop('reapeated_password')
-#         user = User.objects.create_user(
-#             username=validated_data['username'],
-#             email=validated_data['email'],
-#             password=validated_data['password']
-#         )
-#         return user
+        fields = ['username', 'email', 'first_name']
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -134,25 +106,26 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             first_name=first_name
         )
 
-
-
         profile = UserProfile.objects.create(user=user)
         print(">>> PROFILE CREATED:", profile)
 
         return user
-    
+
+
 class CustomAuthTokenSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
+    password = serializers.CharField(
+        style={'input_type': 'password'}, trim_whitespace=False)
 
     def validate(self, attrs):
         email = attrs.get('email')
         password = attrs.get('password')
-        
-        user = authenticate(username=email, password=password)  # nur wenn Username == Email
+
+        user = authenticate(username=email, password=password)
 
         if not user:
-            raise serializers.ValidationError("Ungültige E-Mail oder Passwort.", code='authorization')
+            raise serializers.ValidationError(
+                "Ungültige E-Mail oder Passwort.", code='authorization')
 
         attrs['user'] = user
         return attrs
