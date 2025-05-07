@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'phonenumber_field',
     'join_BE',
-    'corsheaders',
-    'user_auth_app'
+    'corsheaders'
     ]
 
 MIDDLEWARE = [
