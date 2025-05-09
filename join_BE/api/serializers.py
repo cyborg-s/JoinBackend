@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from phonenumber_field.serializerfields import PhoneNumberField as PhoneNumberSerializerField
 from join_BE.models import Tasks, Contacts, Subtask, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -9,7 +8,14 @@ class ContactSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
     email = serializers.EmailField()
-    phone = PhoneNumberSerializerField()
+    phone = serializers.CharField()
+    
+    def validate_phone(self, value):
+        import re
+        pattern = re.compile(r'^\+[1-9]\d{6,14}$')
+        if not pattern.match(value):
+            raise serializers.ValidationError("Gültige Telefonnummer im internationalen Format erforderlich, z. B. +491234567890")
+        return value
 
     def create(self, validated_data):
         return Contacts.objects.create(**validated_data)
