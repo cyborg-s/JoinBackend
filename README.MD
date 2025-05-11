@@ -11,7 +11,6 @@ This is the backend for my Join project, built using Django and Django REST Fram
 ## 🛠 Installation
 
 1. Clone the repository:
-    ```bash
     git clone https://github.com/cyborg-s/JoinBackend.git
     cd JoinBackend
 
