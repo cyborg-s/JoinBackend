@@ -8,7 +8,7 @@ class ContactSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
     email = serializers.EmailField()
-    phone = serializers.CharField()
+    phone = serializers.CharField(max_length=15)
     
     def validate_phone(self, value):
         import re
