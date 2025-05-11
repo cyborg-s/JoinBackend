@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Contacts(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
-    phone = models.CharField(max_length=14, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
