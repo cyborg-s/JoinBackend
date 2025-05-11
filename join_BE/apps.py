@@ -24,6 +24,6 @@ class JoinBeConfig(AppConfig):
             # DB ist evtl. noch nicht bereit (z. B. beim Migrationslauf)
             logger.warning("⚠️ Gastnutzer konnte nicht erstellt werden – DB noch nicht bereit.")
         except Exception as e:
-            logger.error(f"❌ Fehler beim Erstellen des Gastnutzers: Gastzugang Exestiert bereits")
+            logger.error(f"Fehler beim Erstellen des Gastnutzers: Gastzugang Exestiert bereits")
 
 
